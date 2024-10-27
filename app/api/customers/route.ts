@@ -1,10 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
 export async function GET() {
-    const customers = await prisma.contacts.findMany();
-    return Response.json(customers);
+    return Response.json({ message: 'demo message' });
 }
 
 // export async function POST(request: Request) {
