@@ -13,11 +13,13 @@ import {
     ListItemButton,
     ListItemText
 } from "@mui/material";
+import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
 
 interface IObject {
     id: number;
     name: string;
+    url: string;
 }
 
 type IState = IObject[];
@@ -35,11 +37,13 @@ function NavigationBar({
         return [
             {
                 id: 0,
-                name: 'All Contacts'
+                name: 'All Contacts',
+                url: '/'
             },
             {
                 id: 1,
-                name: 'Add Contacts'
+                name: 'Add Contacts',
+                url: '/add_contacts'
             }
         ]
     });
@@ -58,7 +62,9 @@ function NavigationBar({
           {state.map((item: IObject) => (
             <ListItem key={item.id} disablePadding>
               <ListItemButton sx={{ textAlign: 'center' }}>
-                <ListItemText primary={item.name} />
+                <Link href={item.url}>
+                  <ListItemText primary={item.name} />
+                </Link>
               </ListItemButton>
             </ListItem>
           ))}
@@ -82,9 +88,11 @@ function NavigationBar({
               </IconButton>
               <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                 {state.map((item: IObject) => (
-                  <Button key={item.id} sx={{ color: '#fff' }}>
-                    {item.name}
-                  </Button>
+                  <Link href={item.url} key={item.id}>
+                    <Button sx={{ color: '#fff' }}>
+                      {item.name}
+                    </Button>
+                  </Link>
                 ))}
               </Box>
             </Toolbar>
