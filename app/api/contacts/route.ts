@@ -1,7 +1,7 @@
 import Joi from "joi";
 import connectDb from "../config/db";
 import ContactModel from "../models/contacts.model";
-import store_image from "../helper_functions/upload_image";
+import { store_image } from "../helper_functions/image_handle";
 
 // validation schema
 const schema = Joi.object({
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
         const email = data.get('email');
         const phone_number = data.get('phone_number');
 
-        await schema.validateAsync({ 
+        await schema.validateAsync({
             name,
             address,
             email,
