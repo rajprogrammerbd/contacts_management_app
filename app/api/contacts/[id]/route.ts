@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Joi from "joi";
+import { access, open, constants } from "node:fs/promises";
+import path from "node:path";
 import connectDb from "../../config/db";
 import ContactModel from "../../models/contacts.model";
 import { remove_image } from "../../helper_functions/image_handle";
+import { NextResponse } from "next/server";
 
 interface RequestBody {
     name: string;
@@ -77,5 +80,37 @@ export async function DELETE(
     } catch (er: any) {
         console.log(er);
         return Response.json({ message: er.message }, { status: 404 });
+    }
+}
+
+export async function GET(
+    request: Request,
+    { params }: { params: Promise<{ id: string }> }
+
+) {
+    const { id } = await params;
+    
+    try {
+        const complete_path = path.join(process.cwd(), "app", "api", "assets", id);
+
+        await access(complete_path, constants.R_OK);
+
+        const fileHandler = await open(complete_path, 'r');
+
+        const stream = fileHandler.createReadStream();
+
+        const headers = new Headers({
+            "Content-Type": "image/jpeg",
+            "Cache-Control": "no-store",
+        });
+
+        return new NextResponse(stream as any, {
+            headers,
+            status: 200,
+        });
+
+    } catch (er: any) {
+        console.log(er);
+        return Response.json({ message: "Image doesn't exist" }, { status: 404 });
     }
 }
