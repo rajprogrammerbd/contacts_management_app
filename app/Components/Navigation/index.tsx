@@ -114,7 +114,7 @@ function NavigationBar({
               {drawer}
             </Drawer>
           </nav>
-          <Box component="main" sx={{ p: 3 }}>
+          <Box component="main" sx={{ p: 3, width: '100dvw', minHeight: '100dvh' }}>
             <Toolbar />
             {children}
           </Box>

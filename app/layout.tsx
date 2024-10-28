@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import NavigationBar from "./Components/Navigation";
+import ReactQueryProvider from "./Components/ReactQueryProvider";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -29,9 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NavigationBar>
-          {children}
-        </NavigationBar>
+        <ReactQueryProvider>
+          <NavigationBar>
+            {children}
+          </NavigationBar>
+        </ReactQueryProvider>
       </body>
     </html>
   );
