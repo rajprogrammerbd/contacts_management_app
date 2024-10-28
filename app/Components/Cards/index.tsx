@@ -9,10 +9,12 @@ import {
     Button
 } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteContact } from "@/app/utils/contacts";
+import { RootState, useAppDispatch, useAppSelector } from "@/lib/store";
+import { handleFavorites } from "@/lib/slices/list";
 
 const COLOR = "#1976d2";
 const stylesTypography = {
@@ -28,6 +30,8 @@ const spaceStyles = {
 }
 
 function ContactCard(props: IContactCard) {
+    const dispatch = useAppDispatch();
+    const { lists } = useAppSelector((root: RootState) => root.lists);
     const { image, username, phone_number, email, address, created_time, updateData, id } = props;
     const queryClient = useQueryClient();
 
@@ -40,8 +44,23 @@ function ContactCard(props: IContactCard) {
         }
     );
 
+    const search = (id: string): boolean => {
+        const idx = lists.findIndex((v: string) => v === id);
+
+        if (idx === -1) {
+            return false;
+        }
+
+        return true;
+    }
+
     const handleDelete = () => {
         mutation.mutate(id);
+        dispatch(handleFavorites(id));
+    }
+
+    const handleFavorite = (id: string) => {
+        dispatch(handleFavorites(id));
     }
 
     return (
@@ -65,7 +84,11 @@ function ContactCard(props: IContactCard) {
 
             <CardActions sx={spaceStyles}>
                 <CardActions>
-                    <FavoriteIcon sx={{ color: COLOR }} />
+                    {search(id) ? (
+                        <FavoriteIcon sx={{ color: COLOR, cursor: 'pointer' }} onClick={() => handleFavorite(id)} />
+                    ) : (
+                        <FavoriteBorderIcon sx={{ color: COLOR, cursor: 'pointer' }} onClick={() => handleFavorite(id)} />
+                    )}
                     <Button size="small" color="primary" onClick={() => updateData(id)}>Update Info</Button>
                 </CardActions>
                 <DeleteIcon sx={{ cursor: 'pointer', color: COLOR }} onClick={handleDelete} />

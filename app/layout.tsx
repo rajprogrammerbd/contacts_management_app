@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import localFont from "next/font/local";
 import NavigationBar from "./Components/Navigation";
 import { ToastContainer } from 'react-toastify';
 import ReactQueryProvider from "./Components/ReactQueryProvider";
 import 'react-toastify/dist/ReactToastify.css';
 import "./globals.css";
+
+const ReduxProvider = dynamic(() => import("@/lib/redux-provider"));
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,12 +35,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReactQueryProvider>
-          <NavigationBar>
-            {children}
-            <ToastContainer />
-          </NavigationBar>
-        </ReactQueryProvider>
+        <ReduxProvider>
+          <ReactQueryProvider>
+            <NavigationBar>
+              {children}
+              <ToastContainer />
+            </NavigationBar>
+          </ReactQueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
