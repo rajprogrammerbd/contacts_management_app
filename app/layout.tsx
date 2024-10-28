@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Contacts Management Application",
+  title: "All Contacts",
   description: "Application for managing contacts list",
 };
 

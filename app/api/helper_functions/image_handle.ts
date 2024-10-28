@@ -24,7 +24,7 @@ export async function remove_image(img: string) {
 
 export async function store_image(file: File) {
 
-    const filename = file.name.replaceAll(" ", "_");
+    const filename = decodeURIComponent(file.name);
 
     const writeStream = createWriteStream(path.join(process.cwd(), "app", "api", "assets", filename));
     const readableStream = file.stream();

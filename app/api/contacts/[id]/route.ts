@@ -91,8 +91,8 @@ export async function GET(
     const { id } = await params;
     
     try {
-        const complete_path = path.join(process.cwd(), "app", "api", "assets", id);
-
+        const complete_path = path.join(process.cwd(), "app", "api", "assets", decodeURIComponent(id));
+        console.log('complete_path', complete_path);
         await access(complete_path, constants.R_OK);
 
         const fileHandler = await open(complete_path, 'r');
