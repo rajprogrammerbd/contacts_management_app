@@ -29,7 +29,7 @@ export async function addNewContact(body: IFormInput) {
      new_data.append('address', body.address);
      new_data.append('email', body.email);
      new_data.append('phone_number', body.phone_number);
-     new_data.append('profilePicture', body.profilePicture);
+     new_data.append('profilePicture', body.profilePicture[0]);
 
     const { data } = await axios.post('/api/contacts', new_data, {
         headers: {
