@@ -4,7 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Container,
   Alert,
-  Box
+  Box,
+  Typography
 } from "@mui/material";
 import styled from "styled-components";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -33,7 +34,26 @@ const BoxWrapper = styled(Box)`
     grid-template-columns: 1fr;
   }
 `;
- 
+
+function Common({
+  children,
+  open,
+  closeDialogBox
+}: Readonly<{
+  children: React.ReactNode;
+  open: IOpenState;
+  closeDialogBox: () => void;
+}>) {
+  return (
+    <Container maxWidth="xl">
+      <Container maxWidth="xl">
+        {children}
+        <MyDialog open={open.status} onClose={closeDialogBox} id={open.id} />
+      </Container>
+    </Container>
+  )
+}
+
 export default function Home() {
   const [open, setOpen] = useState<IOpenState>({
     status: false,
@@ -59,19 +79,27 @@ export default function Home() {
     }));
   }, []);
 
-  return (
-    <Container maxWidth="xl">
-      {loadingContacts && (
+  if (loadingContacts) {
+    return (
+      <Common open={open} closeDialogBox={closeDialogBox}>
         <CircularProgress />
-      )}
+      </Common>
+    );
+  }
 
-      {failedLoadingContacts && (
+  if (failedLoadingContacts) {
+    return (
+      <Common open={open} closeDialogBox={closeDialogBox}>
         <Alert variant="filled" severity="error">
           Network Error. Failed to get contacts
         </Alert>
-      )}
+      </Common>
+    )
+  }
 
-      {(data && data.length) && (
+  return (
+    <Common open={open} closeDialogBox={closeDialogBox}>
+      {(data && data.length) ? (
         <BoxWrapper>
           {data.map(({ _id, address, email, name, profilePicture, phone_number, created_time }: IContact) =>
             <ContactCard
@@ -79,7 +107,7 @@ export default function Home() {
               id={_id}
               key={_id}
               address={address}
-              created_time={created_time}
+              created_time={new Date(created_time).toUTCString()}
               email={email}
               image={profilePicture}
               phone_number={phone_number}
@@ -87,8 +115,9 @@ export default function Home() {
             />
           )}
         </BoxWrapper>
+      ) : (
+        <Typography variant="h4">There is no contacts added</Typography>
       )}
-      <MyDialog open={open.status} onClose={closeDialogBox} id={open.id} />
-    </Container>
+    </Common>
   )
 }

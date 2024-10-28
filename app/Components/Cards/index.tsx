@@ -1,4 +1,4 @@
-import { IContactCard } from "@/app/types";
+import { DELETEDataResponse, IContactCard } from "@/app/types";
 import {
     Card,
     CardActionArea,
@@ -8,9 +8,11 @@ import {
     CardActions,
     Button
 } from "@mui/material";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteContact } from "@/app/utils/contacts";
 
 const COLOR = "#1976d2";
 const stylesTypography = {
@@ -27,6 +29,20 @@ const spaceStyles = {
 
 function ContactCard(props: IContactCard) {
     const { image, username, phone_number, email, address, created_time, updateData, id } = props;
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation<DELETEDataResponse, Error, string>(
+        (id: string) => deleteContact(id),
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries(['contacts']);
+          }
+        }
+    );
+
+    const handleDelete = () => {
+        mutation.mutate(id);
+    }
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -52,7 +68,7 @@ function ContactCard(props: IContactCard) {
                     <FavoriteIcon sx={{ color: COLOR }} />
                     <Button size="small" color="primary" onClick={() => updateData(id)}>Update Info</Button>
                 </CardActions>
-                <DeleteIcon sx={{ cursor: 'pointer', color: COLOR }} onClick={() => {}} />
+                <DeleteIcon sx={{ cursor: 'pointer', color: COLOR }} onClick={handleDelete} />
             </CardActions>
         </Card>
     );

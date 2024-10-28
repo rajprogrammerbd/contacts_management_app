@@ -49,6 +49,10 @@ export interface IUpdateContactProps {
 
 export type PATCHDataResponse = IContact;
 
+export type DELETEDataResponse = {
+    message: string;
+}
+
 export type IOpenState = {
     status: boolean;
     id: string;

@@ -14,3 +14,9 @@ export async function updateContact(values: Partial<IUpdateContactProps>) {
 
     return data;
 }
+
+export async function deleteContact(id: string) {
+    const { data } = await axios.delete(`/api/contacts/${id}`);
+
+    return data;
+}
