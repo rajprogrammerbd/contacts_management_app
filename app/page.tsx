@@ -16,6 +16,7 @@ const BoxWrapper = styled(Box)`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
+  gap: 2rem;
 `;
  
 export default function Home() {

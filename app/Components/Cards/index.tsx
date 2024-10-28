@@ -8,6 +8,14 @@ import {
     CardActions,
     Button
 } from "@mui/material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
+const COLOR = "#1976d2";
+const stylesTypography = {
+    color: 'text.secondary',
+    fontSize: '0.8rem'
+}
 
 function ContactCard(props: IContactCard) {
     const { image, username, phone_number, email, address, created_time } = props;
@@ -23,15 +31,16 @@ function ContactCard(props: IContactCard) {
                 />
 
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">{username}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>Email Address: {email}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>Phone Number (*): {phone_number}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>Address (*): {address}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>Created Time: (*): {created_time}</Typography>
+                    <Typography gutterBottom variant="h4" sx={{ fontWeight: 'bold' }} component="div">{username}</Typography>
+                    <Typography variant="body2" sx={stylesTypography}>Email Address: {email}</Typography>
+                    <Typography variant="body2" sx={stylesTypography}>Phone Number (<span style={{ color: 'red' }}>*</span>): {phone_number}</Typography>
+                    <Typography variant="body2" sx={stylesTypography}>Address (<span style={{ color: 'red' }}>*</span>): {address}</Typography>
+                    <Typography variant="body2" sx={stylesTypography}>Created Time: (<span style={{ color: 'red' }}>*</span>): {created_time}</Typography>
                 </CardContent>
             </CardActionArea>
 
             <CardActions>
+                <FavoriteIcon sx={{ color: COLOR }} />
                 <Button size="small" color="primary">Update Info</Button>
             </CardActions>
         </Card>
