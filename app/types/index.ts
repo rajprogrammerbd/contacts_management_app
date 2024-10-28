@@ -58,4 +58,10 @@ export type IOpenState = {
     id: string;
 }
 
-// Partial<IMyDialogState>
+export interface IFormInput {
+    name: string;
+    address: string;
+    email: string;
+    phone_number: string;
+    profilePicture: File[];
+  }
