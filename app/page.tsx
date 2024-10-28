@@ -2,12 +2,21 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   Container,
-  Typography,
-  Alert
+  Alert,
+  Box
 } from "@mui/material";
+import styled from "styled-components";
 import CircularProgress from '@mui/material/CircularProgress';
 import { getAllContacts } from "./utils/contacts";
-import { IContactList } from "./types";
+import { IContact, IContactList } from "./types";
+import ContactCard from "./Components/Cards";
+
+const BoxWrapper = styled(Box)`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+`;
  
 export default function Home() {
   const { data, isLoading: loadingContacts, isError: failedLoadingContacts } = useQuery<IContactList>({
@@ -28,7 +37,19 @@ export default function Home() {
       )}
 
       {(data && data.length) && (
-        <Typography variant="h5">There is a list</Typography>
+        <BoxWrapper>
+          {data.map(({ _id, address, email, name, profilePicture, phone_number, created_time }: IContact) =>
+            <ContactCard
+              key={_id}
+              address={address}
+              created_time={created_time}
+              email={email}
+              image={profilePicture}
+              phone_number={phone_number}
+              username={name}
+            />
+          )}
+        </BoxWrapper>
       )}
     </Container>
   )

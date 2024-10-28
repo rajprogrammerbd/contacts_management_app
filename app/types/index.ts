@@ -14,3 +14,12 @@ export type IContactList = IContact[];
 export type ContactHomeState = {
     contacts: IContact[];
 }
+
+export interface IContactCard {
+    username: string;
+    image: string;
+    phone_number: string;
+    email: string;
+    address: string;
+    created_time: string;
+}
