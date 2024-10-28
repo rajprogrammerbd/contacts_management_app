@@ -10,11 +10,19 @@ import {
 } from "@mui/material";
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const COLOR = "#1976d2";
 const stylesTypography = {
     color: 'text.secondary',
     fontSize: '0.8rem'
+}
+
+const spaceStyles = {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
 }
 
 function ContactCard(props: IContactCard) {
@@ -39,9 +47,12 @@ function ContactCard(props: IContactCard) {
                 </CardContent>
             </CardActionArea>
 
-            <CardActions>
-                <FavoriteIcon sx={{ color: COLOR }} />
-                <Button size="small" color="primary" onClick={() => updateData(id)}>Update Info</Button>
+            <CardActions sx={spaceStyles}>
+                <CardActions>
+                    <FavoriteIcon sx={{ color: COLOR }} />
+                    <Button size="small" color="primary" onClick={() => updateData(id)}>Update Info</Button>
+                </CardActions>
+                <DeleteIcon sx={{ cursor: 'pointer', color: COLOR }} onClick={() => {}} />
             </CardActions>
         </Card>
     );

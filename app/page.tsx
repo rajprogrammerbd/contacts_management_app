@@ -16,9 +16,22 @@ import MyDialog from "./Components/Modal";
 const BoxWrapper = styled(Box)`
   width: 100%;
   display: grid;
+  justify-items: center;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   gap: 2rem;
+
+  @media only screen and (max-width: 1260px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media only screen and (max-width: 882px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (max-width: 590px) {
+    grid-template-columns: 1fr;
+  }
 `;
  
 export default function Home() {
