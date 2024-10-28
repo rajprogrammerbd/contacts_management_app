@@ -55,6 +55,7 @@ export async function POST(request: Request) {
             address,
             email,
             phone_number,
+            created_time: new Date(),
             profilePicture: picture['name']
         });
 

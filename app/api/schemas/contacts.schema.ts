@@ -25,6 +25,10 @@ const contactsSchema = new Schema({
     profilePicture: {
         type: String,
         required: true
+    },
+    created_time: {
+        type: Date,
+        required: true
     }
 });
 
