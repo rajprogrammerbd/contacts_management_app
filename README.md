@@ -10,6 +10,12 @@ pull the repo.
 gh repo clone rajprogrammerbd/contacts_management_app
 ```
 
+add .env file and provide MONGODB url.
+
+```
+DATABASE_URL=mongodb+srv://username:password@host/database_name
+```
+
 ## Installation
 
 ```
