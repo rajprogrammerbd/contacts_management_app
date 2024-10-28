@@ -22,4 +22,36 @@ export interface IContactCard {
     email: string;
     address: string;
     created_time: string;
+    updateData: (id: string) => void;
+    id: string;
 }
+
+export interface IMyDialog {
+    open: boolean;
+    id: string;
+    onClose: () => void;
+}
+
+export interface IMyDialogState {
+    name: string;
+    address: string;
+    email: string;
+    phone_number: string;
+}
+
+export interface IUpdateContactProps {
+    name: string;
+    address: string;
+    email: string;
+    phone_number: string;
+    id: string;
+}
+
+export type PATCHDataResponse = IContact;
+
+export type IOpenState = {
+    status: boolean;
+    id: string;
+}
+
+// Partial<IMyDialogState>

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import NavigationBar from "./Components/Navigation";
+import { ToastContainer } from 'react-toastify';
 import ReactQueryProvider from "./Components/ReactQueryProvider";
+import 'react-toastify/dist/ReactToastify.css';
 import "./globals.css";
 
 const geistSans = localFont({
@@ -33,6 +35,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <NavigationBar>
             {children}
+            <ToastContainer />
           </NavigationBar>
         </ReactQueryProvider>
       </body>

@@ -1,4 +1,5 @@
 'use client';
+import { useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Container,
@@ -8,8 +9,9 @@ import {
 import styled from "styled-components";
 import CircularProgress from '@mui/material/CircularProgress';
 import { getAllContacts } from "./utils/contacts";
-import { IContact, IContactList } from "./types";
+import { IContact, IContactList, IOpenState } from "./types";
 import ContactCard from "./Components/Cards";
+import MyDialog from "./Components/Modal";
 
 const BoxWrapper = styled(Box)`
   width: 100%;
@@ -20,10 +22,29 @@ const BoxWrapper = styled(Box)`
 `;
  
 export default function Home() {
+  const [open, setOpen] = useState<IOpenState>({
+    status: false,
+    id: ''
+  });
+
   const { data, isLoading: loadingContacts, isError: failedLoadingContacts } = useQuery<IContactList>({
     queryFn: async () => await getAllContacts(),
     queryKey: ["contacts"],
   });
+
+  const closeDialogBox = useCallback((): void => {
+    setOpen(() => ({
+      status: false,
+      id: ''
+    }));
+  }, []);
+
+  const updateData = useCallback((id: string): void => {
+    setOpen(() => ({
+      status: true,
+      id
+    }));
+  }, []);
 
   return (
     <Container maxWidth="xl">
@@ -41,6 +62,8 @@ export default function Home() {
         <BoxWrapper>
           {data.map(({ _id, address, email, name, profilePicture, phone_number, created_time }: IContact) =>
             <ContactCard
+              updateData={updateData}
+              id={_id}
               key={_id}
               address={address}
               created_time={created_time}
@@ -52,6 +75,7 @@ export default function Home() {
           )}
         </BoxWrapper>
       )}
+      <MyDialog open={open.status} onClose={closeDialogBox} id={open.id} />
     </Container>
   )
 }

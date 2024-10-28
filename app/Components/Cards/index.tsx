@@ -8,7 +8,7 @@ import {
     CardActions,
     Button
 } from "@mui/material";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const COLOR = "#1976d2";
@@ -18,7 +18,7 @@ const stylesTypography = {
 }
 
 function ContactCard(props: IContactCard) {
-    const { image, username, phone_number, email, address, created_time } = props;
+    const { image, username, phone_number, email, address, created_time, updateData, id } = props;
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -41,7 +41,7 @@ function ContactCard(props: IContactCard) {
 
             <CardActions>
                 <FavoriteIcon sx={{ color: COLOR }} />
-                <Button size="small" color="primary">Update Info</Button>
+                <Button size="small" color="primary" onClick={() => updateData(id)}>Update Info</Button>
             </CardActions>
         </Card>
     );
